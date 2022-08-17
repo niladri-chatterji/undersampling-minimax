@@ -1,4 +1,4 @@
-from typing import Callable, Optional
+from typing import Callable, Optional, List
 from torch import Generator
 from torch.utils.data import Dataset
 import torchvision.datasets
@@ -17,6 +17,7 @@ class ImbalancedCIFAR10Dataset(Dataset):
         root: str,
         imb_type: str,
         imb_factor: Optional[int] = None,
+        class_samples: Optional[List[int]] = None,
         generator: Optional[Generator] = None,
         train: bool = True,
         transform: Optional[Callable] = None,
@@ -28,6 +29,9 @@ class ImbalancedCIFAR10Dataset(Dataset):
             imb_factor = 1
         else:
             assert imb_factor is not None
+            
+        if imb_type == "specific":
+            assert class_samples is not None
 
         cifar_dataset = getattr(torchvision.datasets, self.cifar_cls_name)(
             root=root,
@@ -43,6 +47,7 @@ class ImbalancedCIFAR10Dataset(Dataset):
             num_classes=self.num_classes,
             imb_type=imb_type,
             imb_factor=imb_factor,
+            class_samples=class_samples,
         )
 
         self.undersampled_cifar = UndersampledByGroupDataset(
@@ -56,7 +61,7 @@ class ImbalancedCIFAR10Dataset(Dataset):
 
     @staticmethod
     def _get_img_num_per_cls(
-        cifar_dataset, num_classes: int, imb_type: str, imb_factor: int
+        cifar_dataset, num_classes: int, imb_type: str, imb_factor: int, class_samples: List[int]
     ):
         """Modified from https://github.com/kaidic/LDAM-DRW/blob/master/imbalance_cifar.py"""
         imb_factor = 1 / imb_factor
@@ -73,6 +78,11 @@ class ImbalancedCIFAR10Dataset(Dataset):
                 img_num_per_cls.append(int(img_max * imb_factor))
         elif imb_type == "none":
             img_num_per_cls.extend([int(img_max)] * num_classes)
+        elif imb_type == "specific":
+            for cls_idx in range(num_classes // 2):
+                img_num_per_cls.append(class_samples[0])
+            for cls_idx in range(num_classes // 2):
+                img_num_per_cls.append(class_samples[1])
         else:
             raise ValueError(f"Imbalance type imb_type={imb_type} not supported")
         img_num_per_cls = dict(enumerate(img_num_per_cls))

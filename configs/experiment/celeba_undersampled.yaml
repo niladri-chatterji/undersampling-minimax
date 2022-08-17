@@ -9,13 +9,15 @@ defaults:
 
 logger:
     wandb:
-        tags: ["undersampled"]
+        tags: ["undersampled", "early-stopped"]
 
 trainer:
     min_epochs: 1
     max_epochs: 50
+    checkpoint_callback: True
     limit_val_batches: 0.02
 
+test_on_best_ckpt: True
 
 datamodule:
     wrapper_type: undersampled

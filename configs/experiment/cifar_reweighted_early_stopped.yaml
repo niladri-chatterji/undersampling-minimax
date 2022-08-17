@@ -23,7 +23,7 @@ datamodule:
     wrapper_type: reweighted
 
     imb_type: step
-    imb_factor: 10
+    imb_factor: 5
     class_subset: [3, 5]  # cat vs dog
 
     batch_size: 64

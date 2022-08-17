@@ -23,6 +23,7 @@ class ImbalancedCIFAR10DataModule(GroupDataModule):
         imb_factor: int,
         data_augmentation: bool = False,
         class_subset: Optional[List[int]] = None,
+        class_samples: Optional[List[int]] = None,
         train_weight_exponent: float = 1.0,
         **kwargs,
     ):
@@ -34,6 +35,11 @@ class ImbalancedCIFAR10DataModule(GroupDataModule):
         self.class_subset = (
             list(set(class_subset)) if class_subset is not None else None
         )
+        
+        self.class_samples = (
+            list(set(class_samples)) if class_samples is not None else None
+        )
+        
         self.train_weight_exponent = train_weight_exponent
         if class_subset is not None:
             self.num_classes = len(self.class_subset)
@@ -91,6 +97,7 @@ class ImbalancedCIFAR10DataModule(GroupDataModule):
             root=self.data_dir,
             imb_type=self.imb_type,
             imb_factor=self.imb_factor,
+            class_samples = self.class_samples,
             train=True,
             transform=self.train_transform,
             download=True,

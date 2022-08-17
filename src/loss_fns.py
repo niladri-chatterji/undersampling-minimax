@@ -183,33 +183,40 @@ class VSLoss(nn.Module):
         return loss
 
 
-class VSGroupLoss(nn.Module):
-    _takes_groups = True
 
-    def __init__(
-        self,
-        gamma: float,
-        num_per_group: List[int],
-        reduction: str = "none",
-    ):
+
+
+
+
+
+class TiltedLoss(nn.Module):
+    """
+    Tilted loss are of the form 1/t log(sum_{i=1}^n exp(t l_i)). 
+    The hyperparameter t>0 dictates how much loss function focuses on the worst loss.
+    For more details regarding this loss see On Tilted Losses in Machine Learning:
+    Theory and Applications by Li et al. 2021.
+    """
+
+    def __init__(self, t: float, reduction: str):
         super().__init__()
-        num_per_group = torch.tensor(num_per_group, dtype=torch.long)
+        self.t = float(t)
+        assert reduction == "none"
 
-        n_max = torch.max(num_per_group).item()
-        additive_param = -1 / ((num_per_group / n_max) ** gamma)  # iota
-        multiplicative_param = (num_per_group / n_max) ** gamma  # delta
+    def tilted_fn(self, margin_vals: torch.Tensor):
+        # Calculate the logits
+        logit_inner = -1 * margin_vals
+        logit_part = torch.nn.functional.softplus(logit_inner) 
 
-        self.gamma = gamma
-        self.num_per_group = num_per_group
-        self.reduction = reduction
+        # Exponentiate the loss multiplied by t
+        scores = torch.exp(self.t * logit_part)
+        mean_score = torch.mean(scores)
+        tilted_loss = mean_score * torch.ones_like(scores)
+        tilted_loss = torch.log(tilted_loss) / (self.t)
 
-        self.register_buffer("additive_param", additive_param)
-        self.register_buffer("multiplicative_param", multiplicative_param)
-
-    def forward(self, logits, target, groups):
-        assert logits.ndim == 2
-        new_logits = self.multiplicative_param[groups].reshape(
-            -1, 1
-        ) * logits + self.additive_param[groups].reshape(-1, 1)
-        loss = F.cross_entropy(new_logits, target, reduction=self.reduction)
-        return loss
+        return tilted_loss
+ 
+    def forward(self, logits, target):
+        target_sign = 2 * target - 1
+        margin_vals = (logits[:, 1] - logits[:, 0]) * target_sign
+        loss_values = self.tilted_fn(margin_vals)
+        return loss_values

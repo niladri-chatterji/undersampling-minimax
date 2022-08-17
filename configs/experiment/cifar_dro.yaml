@@ -7,8 +7,7 @@ defaults:
     - /architecture: conv_net.yaml
     - /loss_fn: null
 
-logger:
-    wandb:
+logger:    wandb:
         tags: ["dro"]
 
 trainer:
@@ -34,5 +33,5 @@ optimizer:
 
 model:
     dro: True
-    adv_probs_lr: 0.01
+    adv_probs_lr: 0.05
     reweight_loss: False

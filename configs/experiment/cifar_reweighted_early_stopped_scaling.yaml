@@ -5,26 +5,27 @@ defaults:
     - /model: imbalanced_classifier_model.yaml
     - /optimizer: sgd.yaml
     - /architecture: conv_net.yaml
-    - /loss_fn: null
+    - /loss_fn: cross_entropy.yaml
 
 logger:
     wandb:
-        tags: ["undersampled","early-stopped"]
+        tags: ["reweighted", "early-stopped"]
 
 trainer:
     min_epochs: 1
     max_epochs: 200
-    
+
     checkpoint_callback: True
 
 test_on_best_ckpt: True
 
 datamodule:
-    wrapper_type: undersampled
+    wrapper_type: reweighted
 
-    imb_type: step
-    imb_factor: 5
+    imb_type: specific
+    imb_factor: 5 
     class_subset: [3, 5]  # cat vs dog
+    class_samples: [500, 100]     #
 
     batch_size: 64
     num_workers: 4
@@ -34,3 +35,6 @@ datamodule:
 optimizer:
     lr: 0.001
     momentum: 0.9
+
+model:
+    reweight_loss: True
