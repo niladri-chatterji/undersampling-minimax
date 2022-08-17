@@ -1,6 +1,6 @@
 # Undersampling is a Minimax Optimal Robustness Intervention in Nonparametric Classification
 
-![Polynomially-tailed loss correcting for distribution shift](media/linear_intuition.jpeg)
+![Polynomially-tailed loss correcting for distribution shift](media/linear_intuition.jpg)
 ```
 @inproceedings{
 wang2022is,
