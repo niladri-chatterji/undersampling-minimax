@@ -23,7 +23,7 @@ def set_personal_dir_from_hostname():
     return
 
 
-set_personal_dir_from_hostname()
+# set_personal_dir_from_hostname()
 # load environment variables from `.env` file if it exists
 dotenv.load_dotenv(override=True)
 
