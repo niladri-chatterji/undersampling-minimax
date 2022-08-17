@@ -35,24 +35,45 @@ Run `notebooks/two-gaussians.ipynb`
 
 ### Figure 2 (Importance Weighted Cross-Entropy Loss and VS Loss)
 
+
 ```bash
-# Imbalanced Binary CIFAR10
-python run.py +experiment=cifar_erm loss_fn=cross_entropy trainer.max_epochs=400
-python run.py +experiment=cifar_reweighted loss_fn=cross_entropy trainer.max_epochs=400
-python run.py +experiment=cifar_reweighted loss_fn=cross_entropy trainer.max_epochs=400 datamodule.train_weight_exponent=1.5 optimizer.momentum=0. optimizer.lr=0.008 
+# Importance Weighted Cross-Entropy Loss Minority Samples Sweep
+python run.py +experiment=cifar_reweighted_early_stopped_scaling trainer.max_epochs=800 datamodule.class_samples=[2500,500]
+python run.py +experiment=cifar_reweighted_early_stopped_scaling trainer.max_epochs=800 datamodule.class_samples=[2500,1000]
+python run.py +experiment=cifar_reweighted_early_stopped_scaling trainer.max_epochs=800 datamodule.class_samples=[2500,1500]
+python run.py +experiment=cifar_reweighted_early_stopped_scaling trainer.max_epochs=800 datamodule.class_samples=[2500,2000]
 
-python run.py +experiment=cifar_erm loss_fn=polynomial_loss trainer.max_epochs=400
-python run.py +experiment=cifar_reweighted loss_fn=polynomial_loss trainer.max_epochs=400
-python run.py +experiment=cifar_reweighted loss_fn=polynomial_loss trainer.max_epochs=400 datamodule.train_weight_exponent=1.5 optimizer.momentum=0. optimizer.lr=0.008 
+# Importance Weighted Cross-Entropy Loss Majority Samples Sweep
+python run.py +experiment=cifar_reweighted_early_stopped_scaling trainer.max_epochs=800 datamodule.class_samples=[3000,500]
+python run.py +experiment=cifar_reweighted_early_stopped_scaling trainer.max_epochs=800 datamodule.class_samples=[3500,500]
+python run.py +experiment=cifar_reweighted_early_stopped_scaling trainer.max_epochs=800 datamodule.class_samples=[4000,500]
+python run.py +experiment=cifar_reweighted_early_stopped_scaling trainer.max_epochs=800 datamodule.class_samples=[4500,500]
 
-# Subsampled CelebA
-python run.py +experiment=celeba_erm loss_fn=cross_entropy 
-python run.py +experiment=celeba_reweighted loss_fn=cross_entropy 
-python run.py +experiment=celeba_reweighted loss_fn=cross_entropy datamodule.train_weight_exponent=2.0 trainer.max_epochs=100
+# Importance Weighted Cross-Entropy Loss Propotional Increase Sweep
+python run.py +experiment=cifar_reweighted_early_stopped_scaling trainer.max_epochs=800 datamodule.class_samples=[3000,600]
+python run.py +experiment=cifar_reweighted_early_stopped_scaling trainer.max_epochs=800 datamodule.class_samples=[3500,700]
+python run.py +experiment=cifar_reweighted_early_stopped_scaling trainer.max_epochs=800 datamodule.class_samples=[4000,800]
+python run.py +experiment=cifar_reweighted_early_stopped_scaling trainer.max_epochs=800 datamodule.class_samples=[4500,900]
+python run.py +experiment=cifar_reweighted_early_stopped_scaling trainer.max_epochs=800 datamodule.class_samples=[5000,1000]
 
-python run.py +experiment=celeba_erm loss_fn=polynomial_loss
-python run.py +experiment=celeba_reweighted loss_fn=polynomial_loss
-python run.py +experiment=celeba_reweighted loss_fn=polynomial_loss datamodule.train_weight_exponent=2.0 trainer.max_epochs=100
+# Group DRO Minority Samples Sweep
+python run.py +experiment=cifar_early_stopped_scaling_tiltedloss trainer.max_epochs=800 datamodule.class_samples=[2500,500]
+python run.py +experiment=cifar_early_stopped_scaling_tiltedloss trainer.max_epochs=800 datamodule.class_samples=[2500,1000]
+python run.py +experiment=cifar_early_stopped_scaling_tiltedloss trainer.max_epochs=800 datamodule.class_samples=[2500,1500]
+python run.py +experiment=cifar_early_stopped_scaling_tiltedloss trainer.max_epochs=800 datamodule.class_samples=[2500,2000]
+
+# Group DRO Majority Samples Sweep
+python run.py +experiment=cifar_early_stopped_scaling_tiltedloss trainer.max_epochs=800 datamodule.class_samples=[3000,500]
+python run.py +experiment=cifar_early_stopped_scaling_tiltedloss trainer.max_epochs=800 datamodule.class_samples=[3500,500]
+python run.py +experiment=cifar_early_stopped_scaling_tiltedloss trainer.max_epochs=800 datamodule.class_samples=[4000,500]
+python run.py +experiment=cifar_early_stopped_scaling_tiltedloss trainer.max_epochs=800 datamodule.class_samples=[4500,500]
+
+# Group DRO Propotional Increase Sweep
+python run.py +experiment=cifar_early_stopped_scaling_tiltedloss trainer.max_epochs=800 datamodule.class_samples=[3000,600]
+python run.py +experiment=cifar_early_stopped_scaling_tiltedloss trainer.max_epochs=800 datamodule.class_samples=[3500,700]
+python run.py +experiment=cifar_early_stopped_scaling_tiltedloss trainer.max_epochs=800 datamodule.class_samples=[4000,800]
+python run.py +experiment=cifar_early_stopped_scaling_tiltedloss trainer.max_epochs=800 datamodule.class_samples=[4500,900]
+python run.py +experiment=cifar_early_stopped_scaling_tiltedloss trainer.max_epochs=800 datamodule.class_samples=[5000,1000]
 ```
 
 ### Figure 3 (Hat Function)
@@ -63,24 +84,41 @@ Run `notebooks/two-gaussians.ipynb`
 ### Figure 4 (Tilted loss and Group DRO)
 
 ```bash
-# Imbalanced Binary CIFAR10
+# Tilted Loss Minority Samples Sweep
+python run.py +experiment=cifar_scaling_minority_tiltedloss trainer.max_epochs=800 datamodule.class_samples=[2500,500]
+python run.py +experiment=cifar_scaling_minority_tiltedloss trainer.max_epochs=800 datamodule.class_samples=[2500,1000]
+python run.py +experiment=cifar_scaling_minority_tiltedloss trainer.max_epochs=800 datamodule.class_samples=[2500,1500]
+python run.py +experiment=cifar_scaling_minority_tiltedloss trainer.max_epochs=800 datamodule.class_samples=[2500,2000]
 
-python run.py +experiment=cifar_reweighted loss_fn=cross_entropy trainer.max_epochs=400
-python run.py +experiment=cifar_reweighted_early_stopped loss_fn=cross_entropy trainer.max_epochs=400
-python run.py +experiment=cifar_reweighted_early_stopped loss_fn=cross_entropy trainer.max_epochs=400 datamodule.train_weight_exponent=1.5 optimizer.momentum=0. optimizer.lr=0.008 
+# Tilted Loss Majority Samples Sweep
+python run.py +experiment=cifar_scaling_majority_tiltedloss trainer.max_epochs=800 datamodule.class_samples=[3000,500]
+python run.py +experiment=cifar_scaling_majority_tiltedloss trainer.max_epochs=800 datamodule.class_samples=[3500,500]
+python run.py +experiment=cifar_scaling_majority_tiltedloss trainer.max_epochs=800 datamodule.class_samples=[4000,500]
+python run.py +experiment=cifar_scaling_majority_tiltedloss trainer.max_epochs=800 datamodule.class_samples=[4500,500]
 
+# Tilted Loss Propotional Increase Sweep
+python run.py +experiment=cifar_scaling_n_tiltedloss trainer.max_epochs=800 datamodule.class_samples=[3000,600]
+python run.py +experiment=cifar_scaling_n_tiltedloss trainer.max_epochs=800 datamodule.class_samples=[3500,700]
+python run.py +experiment=cifar_scaling_n_tiltedloss trainer.max_epochs=800 datamodule.class_samples=[4000,800]
+python run.py +experiment=cifar_scaling_n_tiltedloss trainer.max_epochs=800 datamodule.class_samples=[4500,900]
+python run.py +experiment=cifar_scaling_n_tiltedloss trainer.max_epochs=800 datamodule.class_samples=[5000,1000]
 
-python run.py +experiment=cifar_reweighted loss_fn=polynomial_loss trainer.max_epochs=400
-python run.py +experiment=cifar_reweighted_early_stopped loss_fn=polynomial_loss trainer.max_epochs=400
-python run.py +experiment=cifar_reweighted_early_stopped loss_fn=polynomial_loss trainer.max_epochs=400 datamodule.train_weight_exponent=1.5 optimizer.momentum=0. optimizer.lr=0.008 
+# Group DRO Minority Samples Sweep
+python run.py +experiment=cifar_early_stopped_scaling_dro trainer.max_epochs=800 datamodule.class_samples=[2500,500]
+python run.py +experiment=cifar_early_stopped_scaling_dro trainer.max_epochs=800 datamodule.class_samples=[2500,1000]
+python run.py +experiment=cifar_early_stopped_scaling_dro trainer.max_epochs=800 datamodule.class_samples=[2500,1500]
+python run.py +experiment=cifar_early_stopped_scaling_dro trainer.max_epochs=800 datamodule.class_samples=[2500,2000]
 
-# Subsampled CelebA
-python run.py +experiment=celeba_reweighted loss_fn=cross_entropy 
-python run.py +experiment=celeba_reweighted_early_stopped loss_fn=cross_entropy
-python run.py +experiment=celeba_reweighted_early_stopped loss_fn=cross_entropy datamodule.train_weight_exponent=2.0 trainer.max_epochs=100
+# Group DRO Majority Samples Sweep
+python run.py +experiment=cifar_early_stopped_scaling_dro trainer.max_epochs=800 datamodule.class_samples=[3000,500]
+python run.py +experiment=cifar_early_stopped_scaling_dro trainer.max_epochs=800 datamodule.class_samples=[3500,500]
+python run.py +experiment=cifar_early_stopped_scaling_dro trainer.max_epochs=800 datamodule.class_samples=[4000,500]
+python run.py +experiment=cifar_early_stopped_scaling_dro trainer.max_epochs=800 datamodule.class_samples=[4500,500]
 
-python run.py +experiment=celeba_reweighted loss_fn=polynomial_loss
-python run.py +experiment=celeba_reweighted_early_stopped loss_fn=polynomial_loss
-python run.py +experiment=celeba_reweighted_early_stopped loss_fn=polynomial_loss datamodule.train_weight_exponent=2.0 trainer.max_epochs=100
-
+# Group DRO Propotional Increase Sweep
+python run.py +experiment=cifar_early_stopped_scaling_dro trainer.max_epochs=800 datamodule.class_samples=[3000,600]
+python run.py +experiment=cifar_early_stopped_scaling_dro trainer.max_epochs=800 datamodule.class_samples=[3500,700]
+python run.py +experiment=cifar_early_stopped_scaling_dro trainer.max_epochs=800 datamodule.class_samples=[4000,800]
+python run.py +experiment=cifar_early_stopped_scaling_dro trainer.max_epochs=800 datamodule.class_samples=[4500,900]
+python run.py +experiment=cifar_early_stopped_scaling_dro trainer.max_epochs=800 datamodule.class_samples=[5000,1000]
 ```
