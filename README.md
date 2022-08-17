@@ -1,4 +1,4 @@
-# Is Importance Weighting Incompatible with Interpolating Classifiers?  (ICLR 2022)
+# Undersampling is a Minimax Optimal Robustness Intervention in Nonparametric Classification
 
 ![Polynomially-tailed loss correcting for distribution shift](media/two-gaussians.jpg)
 ```
