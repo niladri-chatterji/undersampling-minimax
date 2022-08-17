@@ -147,3 +147,4 @@ logs/
 wandb/
 #notebooks/*.pdf
 #notebooks/*.png
+nlpcluster.sh
