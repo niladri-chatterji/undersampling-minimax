@@ -56,24 +56,24 @@ python run.py +experiment=cifar_reweighted_early_stopped_scaling trainer.max_epo
 python run.py +experiment=cifar_reweighted_early_stopped_scaling trainer.max_epochs=800 datamodule.class_samples=[4500,900]
 python run.py +experiment=cifar_reweighted_early_stopped_scaling trainer.max_epochs=800 datamodule.class_samples=[5000,1000]
 
-# Group DRO Minority Samples Sweep
-python run.py +experiment=cifar_early_stopped_scaling_tiltedloss trainer.max_epochs=800 datamodule.class_samples=[2500,500]
-python run.py +experiment=cifar_early_stopped_scaling_tiltedloss trainer.max_epochs=800 datamodule.class_samples=[2500,1000]
-python run.py +experiment=cifar_early_stopped_scaling_tiltedloss trainer.max_epochs=800 datamodule.class_samples=[2500,1500]
-python run.py +experiment=cifar_early_stopped_scaling_tiltedloss trainer.max_epochs=800 datamodule.class_samples=[2500,2000]
+# Importance Weighted VS Loss Minority Samples Sweep
+python run.py +experiment=cifar_reweighted_early_stopped_scaling_vsloss trainer.max_epochs=800 datamodule.class_samples=[2500,500]
+python run.py +experiment=cifar_reweighted_early_stopped_scaling_vsloss trainer.max_epochs=800 datamodule.class_samples=[2500,1000]
+python run.py +experiment=cifar_reweighted_early_stopped_scaling_vsloss trainer.max_epochs=800 datamodule.class_samples=[2500,1500]
+python run.py +experiment=cifar_reweighted_early_stopped_scaling_vsloss trainer.max_epochs=800 datamodule.class_samples=[2500,2000]
 
-# Group DRO Majority Samples Sweep
-python run.py +experiment=cifar_early_stopped_scaling_tiltedloss trainer.max_epochs=800 datamodule.class_samples=[3000,500]
-python run.py +experiment=cifar_early_stopped_scaling_tiltedloss trainer.max_epochs=800 datamodule.class_samples=[3500,500]
-python run.py +experiment=cifar_early_stopped_scaling_tiltedloss trainer.max_epochs=800 datamodule.class_samples=[4000,500]
-python run.py +experiment=cifar_early_stopped_scaling_tiltedloss trainer.max_epochs=800 datamodule.class_samples=[4500,500]
+# Importance Weighted VS Loss Majority Samples Sweep
+python run.py +experiment=cifar_reweighted_early_stopped_scaling_vsloss trainer.max_epochs=800 datamodule.class_samples=[3000,500]
+python run.py +experiment=cifar_reweighted_early_stopped_scaling_vsloss trainer.max_epochs=800 datamodule.class_samples=[3500,500]
+python run.py +experiment=cifar_reweighted_early_stopped_scaling_vsloss trainer.max_epochs=800 datamodule.class_samples=[4000,500]
+python run.py +experiment=cifar_reweighted_early_stopped_scaling_vsloss trainer.max_epochs=800 datamodule.class_samples=[4500,500]
 
-# Group DRO Propotional Increase Sweep
-python run.py +experiment=cifar_early_stopped_scaling_tiltedloss trainer.max_epochs=800 datamodule.class_samples=[3000,600]
-python run.py +experiment=cifar_early_stopped_scaling_tiltedloss trainer.max_epochs=800 datamodule.class_samples=[3500,700]
-python run.py +experiment=cifar_early_stopped_scaling_tiltedloss trainer.max_epochs=800 datamodule.class_samples=[4000,800]
-python run.py +experiment=cifar_early_stopped_scaling_tiltedloss trainer.max_epochs=800 datamodule.class_samples=[4500,900]
-python run.py +experiment=cifar_early_stopped_scaling_tiltedloss trainer.max_epochs=800 datamodule.class_samples=[5000,1000]
+# Importance Weighted VS Loss Propotional Increase Sweep
+python run.py +experiment=cifar_reweighted_early_stopped_scaling_vsloss trainer.max_epochs=800 datamodule.class_samples=[3000,600]
+python run.py +experiment=cifar_reweighted_early_stopped_scaling_vsloss trainer.max_epochs=800 datamodule.class_samples=[3500,700]
+python run.py +experiment=cifar_reweighted_early_stopped_scaling_vsloss trainer.max_epochs=800 datamodule.class_samples=[4000,800]
+python run.py +experiment=cifar_reweighted_early_stopped_scaling_vsloss trainer.max_epochs=800 datamodule.class_samples=[4500,900]
+python run.py +experiment=cifar_reweighted_early_stopped_scaling_vsloss trainer.max_epochs=800 datamodule.class_samples=[5000,1000]
 ```
 
 ### Figure 3 (Hat Function)
